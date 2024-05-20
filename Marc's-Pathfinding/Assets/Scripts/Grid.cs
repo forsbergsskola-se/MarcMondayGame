@@ -9,7 +9,7 @@ public class Grid : MonoBehaviour
 
     public int width = 10;
 
-    bool isWalkable(int x, int y)
+    public bool isWalkable(int x, int y)
     {
         return walkableGrid[y*width+x].walkable;
     }

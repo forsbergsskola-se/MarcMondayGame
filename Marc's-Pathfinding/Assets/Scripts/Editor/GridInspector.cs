@@ -11,7 +11,11 @@ namespace Editor
     [CustomEditor(typeof(Grid))]
     public class GridInspector : UnityEditor.Editor
     {
-        private UnityEngine.Object cellPrefab; // all the blocks
+        public UnityEngine.Object cellPrefab;
+
+        private int arrayLength;
+        
+        // all the blocks
        public override void OnInspectorGUI() // override = adding more elements to the inspector
        {
            base.OnInspectorGUI(); // this is the base inspector that you always find the unity
@@ -21,15 +25,29 @@ namespace Editor
            if (GUILayout.Button("Generate Grid")) // Generate Grid button in the inspector
            {
                Grid grid = target as Grid;
+               int height = arrayLength / grid.width;
+               GridCell [] cellArray = new GridCell [arrayLength];
                
                foreach (var gridCell in grid.walkableGrid)
                {
                    if (gridCell!=null)
-                       Destroy(gridCell);
+                       DestroyImmediate(gridCell);
                }
                
                EditorUtility.SetDirty(grid);
-               
+               for (int i = 0; i < grid.width; i++)
+               {
+                   
+                   for (int j = 0; j < height; j++)
+                   {
+                       GridCell cell  = (GridCell)PrefabUtility.InstantiatePrefab(cellPrefab);
+                        cell.transform.position= new Vector3(i, j, 0);
+
+                       bool index = grid.isWalkable(i,j);
+                       
+                   }
+                   
+               }
            }
 
            EditorGUI.EndDisabledGroup();
