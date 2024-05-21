@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
@@ -12,6 +13,13 @@ public class Grid : MonoBehaviour
     public bool isWalkable(int x, int y)
     {
         return walkableGrid[y*width+x].walkable;
+    }
+
+    public GridCell GetCellForPosition(Vector3 position)
+    {
+
+
+        throw new NotImplementedException();
     }
     // Start is called before the first frame update
     void Start()
