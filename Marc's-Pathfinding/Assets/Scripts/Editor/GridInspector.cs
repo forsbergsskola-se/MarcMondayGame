@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using DefaultNamespace;
+using Grids;
 using UnityEditor;
-using UnityEditor.TerrainTools;
 using UnityEngine;
+using Grid = Grids.Grid;
+
 
 namespace Editor
 {

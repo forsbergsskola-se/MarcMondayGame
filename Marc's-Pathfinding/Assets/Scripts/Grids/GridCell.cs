@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Grids
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class GridCell : MonoBehaviour
@@ -17,6 +17,7 @@ namespace DefaultNamespace
 
         public void OnValidate()
         {
+            spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.color = walkable ? Color.white : Color.black;
         }
         
