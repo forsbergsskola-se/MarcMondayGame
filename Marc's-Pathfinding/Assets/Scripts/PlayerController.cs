@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,7 @@ public class PlayerController : MonoBehaviour
             Grid grid = FindObjectOfType<Grid>();
             GridCell start = grid.GetCellForPosition(transform.position);
             GridCell end = grid.GetCellForPosition(gold.transform.position);
-            var path = FindPath(grid, start, end);
+            var path = FindPath_BreadthFirst(grid, start, end);
             foreach (var node in path)
             {
                 node.spriteRenderer.color = Color.green;
@@ -47,7 +46,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    static IEnumerable<GridCell> FindPath(Grid grid, GridCell start, GridCell end)
+    static IEnumerable<GridCell> FindPath_DepthFirst(Grid grid, GridCell start, GridCell end)
     {
         Stack<GridCell> path = new Stack<GridCell>();
         HashSet<GridCell> visited = new HashSet<GridCell>();
@@ -73,5 +72,44 @@ public class PlayerController : MonoBehaviour
         }
 
         return null;
+    }
+    
+    static IEnumerable<GridCell> FindPath_BreadthFirst(Grid grid, GridCell start, GridCell end)
+    {
+        Queue<GridCell> todo = new();                         
+        HashSet<GridCell> visited = new();
+        todo.Enqueue(start);                                  
+        visited.Add(start);
+        Dictionary<GridCell, GridCell> previous = new();      
+
+        while (todo.Count > 0)                                 
+        {
+            
+            var current = todo.Dequeue();               
+            foreach (var neighbor in grid.GetWalkableNeighborsForCell(current)) 
+            {
+                if (visited.Contains(neighbor)) continue;
+                todo.Enqueue(neighbor); 
+                previous[neighbor] = current;                  
+                visited.Add(neighbor);
+                neighbor.spriteRenderer.color = Color.cyan;
+                if (neighbor == end) return BuildPath(neighbor, previous); 
+                
+                break;
+            }
+            
+        }
+
+        return null;
+    }
+
+    private static IEnumerable<GridCell> BuildPath(GridCell neighbor, Dictionary<GridCell, GridCell> previous)
+    {
+        while (true)
+        {
+            yield return neighbor;
+            if (!previous.TryGetValue(neighbor, out neighbor))
+                yield break;
+        }
     }
 }
