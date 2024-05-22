@@ -12,7 +12,7 @@ namespace Grids
         
         public bool IsWalkable(int x, int y)
         {
-            return walkableGrid[y*width+x].walkable;
+            return walkableGrid[y*width+x].Walkable;
         }
 
         private static Vector2Int GetCellIndexForPosition(Vector3 position)
