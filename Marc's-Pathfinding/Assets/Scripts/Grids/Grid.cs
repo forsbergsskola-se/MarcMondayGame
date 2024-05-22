@@ -31,7 +31,7 @@ namespace Grids
 
         public GridCell GetCellForIndex(Vector2Int index)
         {
-            return walkableGrid[index.y * width + index.x];
+            return walkableGrid[index.x + index.y*width];
         }
 
         bool IsValidAndWalkable(Vector2Int index)

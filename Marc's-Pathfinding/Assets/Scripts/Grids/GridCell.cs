@@ -14,6 +14,10 @@ namespace Grids
         {
             OnValidate();
         }
+        public override string ToString()
+        {
+            return $"{nameof(GridCell)} ({Mathf.FloorToInt(transform.position.x)}|{Mathf.FloorToInt(transform.position.y)})";
+        }
 
         public void OnValidate()
         {
